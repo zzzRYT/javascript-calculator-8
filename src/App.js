@@ -7,25 +7,39 @@ class App {
     this.separator = [',', ':'];
   }
 
-  getSeparator(input) {
+  getNumberFromInput(input) {
     const defaultSeparatorString = this.separator.join('|');
     const regex = new RegExp(`[${defaultSeparatorString}]`, 'g');
-    const splitNumbers = input.split(regex);
+    const splitNumbers = input.split(regex).map(Number);
     return splitNumbers;
   }
 
-  calculator(input) {
-    const splitNumbers = this.getSeparator(input);
+  errorResponse(message) {
+    throw new Error(`[Error]: ${message}`);
+  }
 
-    Console.print(splitNumbers);
+  calculator(input) {
+    const numbers = this.getNumberFromInput(input);
+    const sumNumbers = numbers.reduce((acc, cur) => acc + cur);
+
+    if (!sumNumbers) {
+      this.errorResponse('잘못된 입력입니다.');
+    }
+
+    return sumNumbers;
   }
 
   async run() {
     const userInput = Console.readLineAsync(`${INPUT_DESCRIPTION}\n`);
 
-    userInput.then((input) => {
-      this.calculator(input);
-    });
+    try {
+      userInput.then((input) => {
+        const answer = this.calculator(input);
+        Console.print(answer);
+      });
+    } catch (error) {
+      Console.print(error);
+    }
   }
 }
 
