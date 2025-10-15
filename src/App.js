@@ -14,17 +14,16 @@ class App {
 
   // App class (output) - 어떤 값이 들어오든(에러든, 정상적인 데이터든) 받아서 표출할 수 있도록 함
 
+  async receiveUserInput() {
+    const userInput = await Console.readLineAsync(`${INPUT_DESCRIPTION}\n`);
+    return userInput;
+  }
+
   getNumberFromInput(input) {
     const defaultSeparatorString = this.separator.join('|');
     const regex = new RegExp(`[${defaultSeparatorString}]`, 'g');
     const splitNumbers = input.split(regex).map(Number);
     return splitNumbers;
-  }
-
-  async receiveUserInput() {
-    const userInput = await Console.readLineAsync(`${INPUT_DESCRIPTION}\n`);
-    const numbers = this.getNumberFromInput(userInput);
-    return numbers;
   }
 
   errorResponse(message) {
@@ -35,7 +34,8 @@ class App {
     const calculator = new Calculator();
 
     try {
-      const numbers = await this.receiveUserInput();
+      const input = await this.receiveUserInput();
+      const numbers = this.getNumberFromInput(input);
       const answer = calculator.sum(numbers);
       Console.print(answer);
     } catch (error) {

@@ -14,13 +14,13 @@
 
 - [ ] Calculator Class
 
-  - [ ] input 생성자 함수 구현
-  - [ ] input에 대한 validation 구현 (구분자 검증)
   - [ ] calculator에 대한 validation 구현 (음수, 0 값에 대한 검증)
+  - [ ] 계선 결과값 반환
 
 - [ ] App Class
   - [ ] input
-    - [ ] 입력을 위한 문구 표출
+    - [x] '덧셈할 문자열을 입력해 주세요.'출력 후 입력 받기
+    - [ ] 해당 입력에 구분자로 number값 뽑아내기
   - [ ] output
     - [ ] 에러 상황에 대한 화면 표출
     - [ ] 성공 값에 대한 화면 표출
