@@ -1,4 +1,4 @@
-export class Calculation {
+export class Calculator {
   isValidationMinus(number) {
     if (number < 0) {
       return true;

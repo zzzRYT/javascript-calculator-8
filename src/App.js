@@ -1,5 +1,5 @@
-import { Console } from '@woowacourse/mission-utils';
-import { Calculation, Screen } from './calculator/index.js';
+import { Calculator } from './modules/Calculator';
+import { Screen } from './views/Screen';
 
 class App {
   constructor() {
@@ -14,12 +14,12 @@ class App {
 
   async run() {
     const screen = new Screen();
-    const calculation = new Calculation();
+    const calculator = new Calculator();
 
     try {
       await screen.receiveUserInput();
       const numbers = screen.getNumberFromInput();
-      const answer = calculation.sum(numbers);
+      const answer = calculator.sum(numbers);
       screen.displayOutput(answer, 'answer');
     } catch (error) {
       screen.displayOutput(error, 'error');
