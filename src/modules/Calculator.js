@@ -4,14 +4,12 @@ export class Calculator {
   }
 
   sum(numbers) {
-    let sumNumbers = 0;
-    for (let i = 0; i < numbers.length; i++) {
-      const curNumber = numbers[i];
+    const sumNumbers = numbers.reduce((acc, curNumber) => {
       if (this.isValidationMinus(curNumber)) {
         throw new Error('[ERROR] : 음수는 계산하지 않습니다.');
       }
-      sumNumbers += curNumber;
-    }
+      return acc + curNumber;
+    }, 0);
 
     if (!sumNumbers) {
       throw new Error('[ERROR] : 잘못된 계산 입니다.');
