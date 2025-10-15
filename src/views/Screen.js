@@ -14,12 +14,7 @@ export class Screen {
   }
 
   isCustomSeparator() {
-    const customStartIndex = this.input.indexOf('//');
-    const customEndIndex = this.input.indexOf('\\n');
-    if (customStartIndex !== -1 && customEndIndex !== -1) {
-      return true;
-    }
-    return false;
+    return this.input.indexOf('//') !== -1 && this.input.indexOf('\\n');
   }
 
   addCustomSeparator() {
