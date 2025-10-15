@@ -42,11 +42,11 @@ export class Screen {
     return this.formattedString();
   }
 
-  displayOutput(answer, type) {
-    if (type === 'error') {
-      Console.print(answer);
-      return;
-    }
-    Console.print(`결과 : ${answer}`);
+  calculatorDisplaySuccess(result) {
+    Console.print(`결과 : ${result}`);
+  }
+
+  calculatorDisplayError(error) {
+    Console.print(error);
   }
 }
