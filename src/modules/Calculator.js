@@ -1,3 +1,5 @@
+import { selectedErrorResponse } from '../utils.js';
+
 export class Calculator {
   isValidationMinus(number) {
     return number < 0;
@@ -6,13 +8,13 @@ export class Calculator {
   sum(numbers) {
     const sumNumbers = numbers.reduce((acc, curNumber) => {
       if (this.isValidationMinus(curNumber)) {
-        throw new Error('[ERROR] : 음수는 계산하지 않습니다.');
+        throw new Error(selectedErrorResponse('calculator'));
       }
       return acc + curNumber;
     }, 0);
 
     if (!sumNumbers) {
-      throw new Error('[ERROR] : 잘못된 계산 입니다.');
+      throw new Error(selectedErrorResponse('calculator'));
     }
 
     return sumNumbers;
