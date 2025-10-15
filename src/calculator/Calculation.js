@@ -1,16 +1,11 @@
-export class Calculator {
-  #numbers;
-  constructor(numbers) {
-    this.#numbers = numbers;
-  }
-
+export class Calculation {
   validation() {}
 
   sum(numbers) {
     const sumNumbers = numbers.reduce((acc, cur) => acc + cur);
 
     if (!sumNumbers) {
-      this.errorResponse('잘못된 입력입니다.');
+      throw new Error('잘못된 계산 입니다.');
     }
 
     return sumNumbers;

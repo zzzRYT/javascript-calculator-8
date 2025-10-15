@@ -1,7 +1,6 @@
 import { Console } from '@woowacourse/mission-utils';
 
-import { INPUT_DESCRIPTION } from './constants.js';
-import { Calculator } from './Calculator.js';
+import { Calculation, Screen } from './calculator/index.js';
 
 class App {
   constructor() {
@@ -14,29 +13,14 @@ class App {
 
   // App class (output) - 어떤 값이 들어오든(에러든, 정상적인 데이터든) 받아서 표출할 수 있도록 함
 
-  async receiveUserInput() {
-    const userInput = await Console.readLineAsync(`${INPUT_DESCRIPTION}\n`);
-    return userInput;
-  }
-
-  getNumberFromInput(input) {
-    const defaultSeparatorString = this.separator.join('|');
-    const regex = new RegExp(`[${defaultSeparatorString}]`, 'g');
-    const splitNumbers = input.split(regex).map(Number);
-    return splitNumbers;
-  }
-
-  errorResponse(message) {
-    throw new Error(`[Error]: ${message}`);
-  }
-
   async run() {
-    const calculator = new Calculator();
+    const screen = new Screen();
+    const calculation = new Calculation();
 
     try {
-      const input = await this.receiveUserInput();
-      const numbers = this.getNumberFromInput(input);
-      const answer = calculator.sum(numbers);
+      const input = await screen.receiveUserInput();
+      const numbers = screen.getNumberFromInput(input);
+      const answer = calculation.sum(numbers);
       Console.print(answer);
     } catch (error) {
       Console.print(error);
