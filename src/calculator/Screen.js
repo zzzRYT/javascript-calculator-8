@@ -22,7 +22,6 @@ export class Screen {
     return false;
   }
 
-  // 있을수도 없을수도 있음
   addCustomSeparator() {
     const customSeparator = this.input.slice(2, 3);
     this.separator.push(customSeparator);
@@ -44,5 +43,11 @@ export class Screen {
     return this.formattedString();
   }
 
-  displayOutput() {}
+  displayOutput(answer, type) {
+    if (type === 'error') {
+      Console.print(`[Error]: ${answer}`);
+      return;
+    }
+    Console.print(`결과 : ${answer}`);
+  }
 }

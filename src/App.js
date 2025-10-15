@@ -18,12 +18,12 @@ class App {
     const calculation = new Calculation();
 
     try {
-      const input = await screen.receiveUserInput();
+      await screen.receiveUserInput();
       const numbers = screen.getNumberFromInput();
       const answer = calculation.sum(numbers);
-      Console.print(answer);
+      screen.displayOutput(answer, 'answer');
     } catch (error) {
-      Console.print(error);
+      screen.displayOutput(error, 'error');
     }
   }
 }
