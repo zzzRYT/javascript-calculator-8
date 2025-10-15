@@ -1,9 +1,6 @@
 export class Calculator {
   isValidationMinus(number) {
-    if (number < 0) {
-      return true;
-    }
-    return false;
+    return number < 0;
   }
 
   sum(numbers) {
