@@ -12,18 +12,19 @@
 
 ## **기능구현**
 
-- [ ] Calculator Class
+- [x] Calculator Class
 
-  - [ ] calculator에 대한 validation 구현 (음수, 0 값에 대한 검증)
-  - [ ] 계선 결과값 반환
+  - [x] calculator에 대한 validation 구현 (음수, 0 값에 대한 검증)
+  - [x] 계산 결과값 반환
 
-- [ ] App Class
-  - [ ] input
+- [ ] Screen Class
+  - [x] input
     - [x] '덧셈할 문자열을 입력해 주세요.'출력 후 입력 받기
-    - [ ] 해당 입력에 구분자로 number값 뽑아내기
+    - [x] 해당 입력에 구분자로 number값 뽑아내기
+    - [x] custom구분자 추가하기
   - [ ] output
     - [ ] 에러 상황에 대한 화면 표출
-    - [ ] 성공 값에 대한 화면 표출
+    - [x] 성공 값에 대한 화면 표출
 
 ### **입출력 요구 사항**
 

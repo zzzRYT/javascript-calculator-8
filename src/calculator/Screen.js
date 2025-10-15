@@ -35,7 +35,6 @@ export class Screen {
     const defaultSeparatorString = this.separator.join('|');
     const regex = new RegExp(`[${defaultSeparatorString}]`, 'g');
     const splitNumbers = this.input.split(regex).map(Number);
-    this.addCustomSeparator();
     return splitNumbers;
   }
 
@@ -45,7 +44,7 @@ export class Screen {
 
   displayOutput(answer, type) {
     if (type === 'error') {
-      Console.print(`[Error]: ${answer}`);
+      Console.print(answer);
       return;
     }
     Console.print(`결과 : ${answer}`);

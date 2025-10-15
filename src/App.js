@@ -1,5 +1,4 @@
 import { Console } from '@woowacourse/mission-utils';
-
 import { Calculation, Screen } from './calculator/index.js';
 
 class App {
@@ -24,6 +23,7 @@ class App {
       screen.displayOutput(answer, 'answer');
     } catch (error) {
       screen.displayOutput(error, 'error');
+      throw error;
     }
   }
 }
