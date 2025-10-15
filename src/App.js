@@ -19,7 +19,7 @@ class App {
 
     try {
       const input = await screen.receiveUserInput();
-      const numbers = screen.getNumberFromInput(input);
+      const numbers = screen.getNumberFromInput();
       const answer = calculation.sum(numbers);
       Console.print(answer);
     } catch (error) {

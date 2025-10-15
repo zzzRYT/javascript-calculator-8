@@ -5,23 +5,44 @@ import { INPUT_DESCRIPTION } from '../constants.js';
 export class Screen {
   constructor() {
     this.separator = [',', ':'];
+    this.input = '';
   }
 
   async receiveUserInput() {
     const userInput = await Console.readLineAsync(`${INPUT_DESCRIPTION}\n`);
-    return userInput;
+    this.input = userInput;
   }
 
-  // 무조건 있어야 함
-  validationDefaultSeparator() {}
+  isCustomSeparator() {
+    const customStartIndex = this.input.indexOf('//');
+    const customEndIndex = this.input.indexOf('\\n');
+    if (customStartIndex !== -1 && customEndIndex !== -1) {
+      return true;
+    }
+    return false;
+  }
 
   // 있을수도 없을수도 있음
-  isValidationCustomSeparator() {}
+  addCustomSeparator() {
+    const customSeparator = this.input.slice(2, 3);
+    this.separator.push(customSeparator);
+    this.input = this.input.slice(5);
+  }
 
-  getNumberFromInput(input) {
+  formattedString() {
+    if (this.isCustomSeparator()) {
+      this.addCustomSeparator();
+    }
     const defaultSeparatorString = this.separator.join('|');
     const regex = new RegExp(`[${defaultSeparatorString}]`, 'g');
-    const splitNumbers = input.split(regex).map(Number);
+    const splitNumbers = this.input.split(regex).map(Number);
+    this.addCustomSeparator();
     return splitNumbers;
   }
+
+  getNumberFromInput() {
+    return this.formattedString();
+  }
+
+  displayOutput() {}
 }
