@@ -19,7 +19,8 @@
   - [ ] calculator에 대한 validation 구현 (음수, 0 값에 대한 검증)
 
 - [ ] App Class
-
+  - [ ] input
+    - [ ] 입력을 위한 문구 표출
   - [ ] output
     - [ ] 에러 상황에 대한 화면 표출
     - [ ] 성공 값에 대한 화면 표출
