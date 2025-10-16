@@ -40,8 +40,4 @@ export class Screen {
   calculatorDisplaySuccess(result) {
     Console.print(`결과 : ${result}`);
   }
-
-  calculatorDisplayError(error) {
-    Console.print(error);
-  }
 }

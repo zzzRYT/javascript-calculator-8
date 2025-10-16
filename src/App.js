@@ -12,7 +12,6 @@ class App {
       const result = calculator.sum(numbers);
       screen.calculatorDisplaySuccess(result);
     } catch (error) {
-      screen.calculatorDisplayError(error);
       throw error;
     }
   }
