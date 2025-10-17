@@ -15,6 +15,7 @@
 - [x] Calculator Class
 
   - [x] calculator에 대한 validation 구현 (음수, 0 값에 대한 검증)
+  - [x] Number값이 아닌 값 판별하기
   - [x] 계산 결과값 반환
 
 - [ ] Screen Class

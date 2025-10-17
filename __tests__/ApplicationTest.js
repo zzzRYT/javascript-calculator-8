@@ -1,5 +1,5 @@
-import App from "../src/App.js";
-import { MissionUtils } from "@woowacourse/mission-utils";
+import App from '../src/App.js';
+import { MissionUtils } from '@woowacourse/mission-utils';
 
 const mockQuestions = (inputs) => {
   MissionUtils.Console.readLineAsync = jest.fn();
@@ -11,18 +11,18 @@ const mockQuestions = (inputs) => {
 };
 
 const getLogSpy = () => {
-  const logSpy = jest.spyOn(MissionUtils.Console, "print");
+  const logSpy = jest.spyOn(MissionUtils.Console, 'print');
   logSpy.mockClear();
   return logSpy;
 };
 
-describe("문자열 계산기", () => {
-  test("커스텀 구분자 사용", async () => {
-    const inputs = ["//;\\n1"];
+describe('Screen Test', () => {
+  test('커스텀 구분자를 사용한다.', async () => {
+    const inputs = ['//;\\n1'];
     mockQuestions(inputs);
 
     const logSpy = getLogSpy();
-    const outputs = ["결과 : 1"];
+    const outputs = ['결과 : 1'];
 
     const app = new App();
     await app.run();
@@ -32,12 +32,159 @@ describe("문자열 계산기", () => {
     });
   });
 
-  test("예외 테스트", async () => {
-    const inputs = ["-1,2,3"];
+  test('// 와 \\n 사이 문자열이 들어오지 못한다.', async () => {
+    const inputs = ['//;#+\n1;#+2;#+3'];
+    mockQuestions(inputs);
+
+    const app = new App();
+    await expect(app.run()).rejects.toThrow('[ERROR]');
+  });
+
+  test('// 와 \\n 없이 구분자는 쓰지 못한다.', async () => {
+    const inputs = ['1;2;3'];
+    mockQuestions(inputs);
+
+    const app = new App();
+    await expect(app.run()).rejects.toThrow('[ERROR]');
+  });
+
+  test('기본 구분자 ,를 사용한다.', async () => {
+    const inputs = ['1,2,3'];
+    mockQuestions(inputs);
+
+    const logSpy = getLogSpy();
+    const outputs = ['결과 : 6'];
+
+    const app = new App();
+    await app.run();
+
+    outputs.forEach((output) => {
+      expect(logSpy).toHaveBeenCalledWith(expect.stringContaining(output));
+    });
+  });
+
+  test('기본 구분자 :를 사용한다.', async () => {
+    const inputs = ['1:2:3'];
+    mockQuestions(inputs);
+
+    const logSpy = getLogSpy();
+    const outputs = ['결과 : 6'];
+
+    const app = new App();
+    await app.run();
+
+    outputs.forEach((output) => {
+      expect(logSpy).toHaveBeenCalledWith(expect.stringContaining(output));
+    });
+  });
+
+  test('기본 구분자를 섞어서 사용한다.', async () => {
+    const inputs = ['1,2:3'];
+    mockQuestions(inputs);
+
+    const logSpy = getLogSpy();
+    const outputs = ['결과 : 6'];
+
+    const app = new App();
+    await app.run();
+
+    outputs.forEach((output) => {
+      expect(logSpy).toHaveBeenCalledWith(expect.stringContaining(output));
+    });
+  });
+
+  test('커스텀 구분자와 기본구분자 함께 사용한다.', async () => {
+    const inputs = ['//;\\n1,2:3;4'];
+    mockQuestions(inputs);
+
+    const logSpy = getLogSpy();
+    const outputs = ['결과 : 10'];
+
+    const app = new App();
+    await app.run();
+
+    outputs.forEach((output) => {
+      expect(logSpy).toHaveBeenCalledWith(expect.stringContaining(output));
+    });
+  });
+
+  test('소수점 계산시 반올림 되었다는 표시가 나온다.', async () => {
+    const inputs = ['0.1,0.2'];
+    mockQuestions(inputs);
+
+    const logSpy = getLogSpy();
+    const outputs = ['결과 : 0.3 (소수점 첫 째 자리까지 반올림)'];
+
+    const app = new App();
+    await app.run();
+
+    outputs.forEach((output) => {
+      expect(logSpy).toHaveBeenCalledWith(expect.stringContaining(output));
+    });
+  });
+});
+
+describe('Calculator Test', () => {
+  test('음수가 들어오면 계산에 실패한다.', async () => {
+    const inputs = ['-1,2,3'];
     mockQuestions(inputs);
 
     const app = new App();
 
-    await expect(app.run()).rejects.toThrow("[ERROR]");
+    await expect(app.run()).rejects.toThrow('[ERROR]');
+  });
+
+  test('숫자 범위를 넘어간 수가 들어오면 계산에 실패한다.', async () => {
+    const inputs = ['9007199254740992'];
+    mockQuestions(inputs);
+
+    const app = new App();
+
+    await expect(app.run()).reject.toThrow('[ERROR]');
+  });
+
+  test('소수값이 들어오면 계산한다.', async () => {
+    const inputs = ['1.2,1.8'];
+    mockQuestions(inputs);
+
+    const logSpy = getLogSpy();
+    const outputs = ['결과 : 3'];
+
+    const app = new App();
+    await app.run();
+
+    outputs.forEach((output) => {
+      expect(logSpy).toHaveBeenCalledWith(expect.stringContaining(output));
+    });
+  });
+
+  test('소수값 예외처리', async () => {
+    const inputs = ['0.1,0.2'];
+    mockQuestions(inputs);
+
+    const logSpy = getLogSpy();
+    const outputs = ['결과 : 0.3'];
+
+    const app = new App();
+    await app.run();
+
+    outputs.forEach((output) => {
+      expect(logSpy).toHaveBeenCalledWith(expect.stringContaining(output));
+    });
+  });
+
+  test('점[.]이 구분자로 들어온다면 정수로 계산한다.', async () => {
+    const inputs = ['//.\\n1.2,1.8'];
+    mockQuestions(inputs);
+
+    const logSpy = getLogSpy();
+    const outputs = ['결과 : 12'];
+
+    const app = new App();
+    await app.run();
+
+    outputs.forEach((output) => {
+      expect(logSpy).toHaveBeenCalledWith(expect.stringContaining(output));
+    });
   });
 });
