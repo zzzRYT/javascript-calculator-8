@@ -8,24 +8,19 @@ export class Screen {
     this.input = '';
   }
 
-  async receiveUserInput() {
-    const userInput = await Console.readLineAsync(`${INPUT_DESCRIPTION}\n`);
-    this.input = userInput;
-  }
-
-  isCustomSeparator() {
+  #isCustomSeparator() {
     return this.input.indexOf('//') !== -1 && this.input.indexOf('\\n');
   }
 
-  addCustomSeparator() {
+  #addCustomSeparator() {
     const customSeparator = this.input.slice(2, 3);
     this.separator.push(customSeparator);
     this.input = this.input.slice(5);
   }
 
-  formattedString() {
-    if (this.isCustomSeparator()) {
-      this.addCustomSeparator();
+  #formattedString() {
+    if (this.#isCustomSeparator()) {
+      this.#addCustomSeparator();
     }
     const defaultSeparatorString = this.separator.join('|');
     const regex = new RegExp(`[${defaultSeparatorString}]`, 'g');
@@ -33,8 +28,13 @@ export class Screen {
     return splitNumbers;
   }
 
+  async receiveUserInput() {
+    const userInput = await Console.readLineAsync(`${INPUT_DESCRIPTION}\n`);
+    this.input = userInput;
+  }
+
   getNumberFromInput() {
-    return this.formattedString();
+    return this.#formattedString();
   }
 
   calculatorDisplaySuccess(result) {
