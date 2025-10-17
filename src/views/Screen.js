@@ -18,14 +18,17 @@ export class Screen {
     this.input = this.input.slice(5);
   }
 
+  #splitInputString(splitTarget) {
+    return this.input.split(splitTarget);
+  }
+
   #formattedString() {
     if (this.#isCustomSeparator()) {
       this.#addCustomSeparator();
     }
     const defaultSeparatorString = this.separator.join('|');
     const regex = new RegExp(`[${defaultSeparatorString}]`, 'g');
-    const splitNumbers = this.input.split(regex).map(Number);
-    return splitNumbers;
+    return this.#splitInputString(regex);
   }
 
   async receiveUserInput() {
@@ -34,7 +37,7 @@ export class Screen {
   }
 
   getNumberFromInput() {
-    return this.#formattedString();
+    return this.#formattedString().map(Number);
   }
 
   calculatorDisplaySuccess(result) {

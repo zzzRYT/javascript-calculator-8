@@ -1,13 +1,21 @@
 import { selectedErrorResponse } from '../utils.js';
 
 export class Calculator {
-  #isValidationMinus(number) {
-    return number < 0;
+  #isMinus(target) {
+    return target < 0;
+  }
+
+  #isNumber(target) {
+    return Number.isInteger(target);
+  }
+
+  #validationCalculator(target) {
+    return this.#isMinus(target) && this.#isNumber(target);
   }
 
   sum(numbers) {
     const sumNumbers = numbers.reduce((acc, curNumber) => {
-      if (this.#isValidationMinus(curNumber)) {
+      if (this.#validationCalculator(curNumber)) {
         throw new Error(selectedErrorResponse('calculator'));
       }
       return acc + curNumber;
