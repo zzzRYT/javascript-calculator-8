@@ -21,10 +21,6 @@ export class Calculator {
       return acc + curNumber;
     }, 0);
 
-    if (!sumNumbers) {
-      throw new Error(selectedErrorResponse('calculator'));
-    }
-
     return sumNumbers;
   }
 }
