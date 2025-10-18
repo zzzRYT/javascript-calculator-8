@@ -1,6 +1,6 @@
 import { Console } from '@woowacourse/mission-utils';
 
-import { INPUT_DESCRIPTION } from '../constants.js';
+import { CUSTOM_CONTAINER, INPUT_DESCRIPTION } from '../constants.js';
 
 export class Screen {
   constructor() {
@@ -13,9 +13,14 @@ export class Screen {
   }
 
   #addCustomSeparator() {
-    const customSeparator = this.input.slice(2, 3);
-    this.separator.push(customSeparator);
-    this.input = this.input.slice(5);
+    const startIndex =
+      this.input.indexOf(CUSTOM_CONTAINER.START) +
+      CUSTOM_CONTAINER.START.length;
+    const endIndex = this.input.indexOf(CUSTOM_CONTAINER.END);
+    const separator = this.input.substring(startIndex, endIndex);
+    this.separator.push(separator);
+    this.input = this.input.slice(endIndex + CUSTOM_CONTAINER.END.length);
+    Console.print(this.input);
   }
 
   #splitInputString(splitTarget) {
@@ -26,6 +31,7 @@ export class Screen {
     if (this.#isCustomSeparator()) {
       this.#addCustomSeparator();
     }
+    Console.print(this.separator);
     const defaultSeparatorString = this.separator.join('|');
     const regex = new RegExp(`[${defaultSeparatorString}]`, 'g');
     return this.#splitInputString(regex);
