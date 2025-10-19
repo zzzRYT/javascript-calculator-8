@@ -203,6 +203,21 @@ describe('Calculator Test', () => {
     });
   });
 
+  test('소수점 첫 번째 자리까지 반올림한다.', async () => {
+    const inputs = ['1.2,0.555555'];
+    mockQuestions(inputs);
+
+    const logSpy = getLogSpy();
+    const outputs = ['결과 : 1.8'];
+
+    const app = new App();
+    await app.run();
+
+    outputs.forEach((output) => {
+      expect(logSpy).toHaveBeenCalledWith(expect.stringContaining(output));
+    });
+  });
+
   test('점[.]이 구분자로 들어온다면 정수로 계산한다.', async () => {
     const inputs = ['//.\\n1.2,1.8'];
     mockQuestions(inputs);
