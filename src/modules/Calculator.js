@@ -20,8 +20,8 @@ export class Calculator {
     return sumNumbers;
   }
 
-  #hasDecimal(value) {
-    return typeof value === 'number' && value % 1 !== 0;
+  #isMinus(value) {
+    return value < 0;
   }
 
   #isOverflow(value) {
@@ -31,7 +31,7 @@ export class Calculator {
     return false;
   }
 
-  #isMinus(value) {
-    return value < 0;
+  #hasDecimal(value) {
+    return typeof value === 'number' && value % 1 !== 0;
   }
 }

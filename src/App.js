@@ -35,16 +35,6 @@ class App {
     );
   }
 
-  #isNoneCustomSeparator() {
-    const separators = this.input
-      .split(/([0-9.]+)/)
-      .filter((v, i) => i % 2 === 0 && v !== '');
-
-    return separators.some((sep) =>
-      sep.split('').some((char) => !this.separator.includes(char))
-    );
-  }
-
   #addCustomSeparator() {
     const startIndex =
       this.input.indexOf(CUSTOM_CONTAINER.START) +
@@ -60,6 +50,16 @@ class App {
 
   #isString(string) {
     return string.length > 1;
+  }
+
+  #isNoneCustomSeparator() {
+    const separators = this.input
+      .split(/([0-9.]+)/)
+      .filter((v, i) => i % 2 === 0 && v !== '');
+
+    return separators.some((sep) =>
+      sep.split('').some((char) => !this.separator.includes(char))
+    );
   }
 
   #splitInputString(splitTarget) {
