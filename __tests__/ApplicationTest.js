@@ -1,5 +1,5 @@
 import App from '../src/App.js';
-import { MissionUtils } from '@woowacourse/mission-utils';
+import { Console, MissionUtils } from '@woowacourse/mission-utils';
 import { INPUT_DESCRIPTION } from '../src/constants.js';
 
 const mockQuestions = (inputs) => {
@@ -111,12 +111,24 @@ describe('App Test', () => {
 });
 
 describe('Screen Test', () => {
-  test('소수점 계산시 반올림 되었다는 표시가 나온다.', async () => {
-    const inputs = ['0.1,0.2'];
+  test('npm run start시 시작 문구가 나온다.', async () => {
+    const inputs = ['1,2,3'];
+    mockQuestions(inputs);
+
+    const app = new App();
+    await app.run();
+
+    expect(MissionUtils.Console.readLineAsync).toHaveBeenCalledWith(
+      expect.stringContaining(INPUT_DESCRIPTION)
+    );
+  });
+
+  test('결과 값 도출 시 화면', async () => {
+    const inputs = ['1,2,3'];
     mockQuestions(inputs);
 
     const logSpy = getLogSpy();
-    const outputs = ['결과 : 0.3 (소수점 첫 째 자리까지 반올림)'];
+    const outputs = ['결과 : 6'];
 
     const app = new App();
     await app.run();
@@ -153,12 +165,12 @@ describe('Calculator Test', () => {
   });
 
   test('숫자 범위를 넘어간 수가 들어오면 계산에 실패한다.', async () => {
-    const inputs = ['9007199254740992'];
+    const inputs = ['9007199254740991,1'];
     mockQuestions(inputs);
 
     const app = new App();
 
-    await expect(app.run()).reject.toThrow('[ERROR]');
+    await expect(app.run()).rejects.toThrow('[ERROR]');
   });
 
   test('소수값이 들어오면 계산한다.', async () => {

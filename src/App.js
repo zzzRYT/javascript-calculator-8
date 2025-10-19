@@ -4,7 +4,6 @@ import { Screen } from './views/Screen.js';
 import { selectedErrorResponse } from './utils.js';
 
 import { CUSTOM_CONTAINER } from './constants.js';
-import { Console } from '@woowacourse/mission-utils';
 class App {
   constructor() {
     this.separator = [',', ':'];
@@ -37,9 +36,13 @@ class App {
   }
 
   #isNoneCustomSeparator() {
-    const allowedSeparators = this.separator.join('');
-    const pattern = new RegExp(`[^0-9${allowedSeparators}]`);
-    return pattern.test(this.input);
+    const separators = this.input
+      .split(/([0-9.]+)/)
+      .filter((v, i) => i % 2 === 0 && v !== '');
+
+    return separators.some((sep) =>
+      sep.split('').some((char) => !this.separator.includes(char))
+    );
   }
 
   #addCustomSeparator() {
@@ -48,7 +51,6 @@ class App {
       CUSTOM_CONTAINER.START.length;
     const endIndex = this.input.indexOf(CUSTOM_CONTAINER.END);
     const separator = this.input.substring(startIndex, endIndex);
-    Console.print(separator);
     if (this.#isString(separator)) {
       throw new Error(selectedErrorResponse('input'));
     }
