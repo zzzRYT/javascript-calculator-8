@@ -1,6 +1,8 @@
 import { Calculator } from './modules/Calculator.js';
 import { Screen } from './views/Screen.js';
 
+import { selectedErrorResponse } from './utils.js';
+
 import { CUSTOM_CONTAINER } from './constants.js';
 class App {
   constructor() {
@@ -11,6 +13,15 @@ class App {
   getNumberFromInput(input) {
     this.input = input;
     return this.#formatString().map(Number);
+  }
+
+  #formatString() {
+    if (this.#isCustomSeparator()) {
+      this.#addCustomSeparator();
+    }
+    const defaultSeparatorString = this.separator.join('|');
+    const regex = new RegExp(`[${defaultSeparatorString}]`, 'g');
+    return this.#splitInputString(regex);
   }
 
   #isCustomSeparator() {
@@ -26,21 +37,19 @@ class App {
       CUSTOM_CONTAINER.START.length;
     const endIndex = this.input.indexOf(CUSTOM_CONTAINER.END);
     const separator = this.input.substring(startIndex, endIndex);
+    if (this.#isString(separator)) {
+      throw new Error(selectedErrorResponse('input'));
+    }
     this.separator.push(separator);
     this.input = this.input.slice(endIndex + CUSTOM_CONTAINER.END.length);
   }
 
-  #splitInputString(splitTarget) {
-    return this.input.split(splitTarget);
+  #isString(string) {
+    return string.length > 1;
   }
 
-  #formatString() {
-    if (this.#isCustomSeparator()) {
-      this.#addCustomSeparator();
-    }
-    const defaultSeparatorString = this.separator.join('|');
-    const regex = new RegExp(`[${defaultSeparatorString}]`, 'g');
-    return this.#splitInputString(regex);
+  #splitInputString(splitTarget) {
+    return this.input.split(splitTarget);
   }
 
   async run() {
