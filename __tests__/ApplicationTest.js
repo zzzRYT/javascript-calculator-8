@@ -1,5 +1,6 @@
 import App from '../src/App.js';
 import { MissionUtils } from '@woowacourse/mission-utils';
+import { INPUT_DESCRIPTION } from '../src/constants.js';
 
 const mockQuestions = (inputs) => {
   MissionUtils.Console.readLineAsync = jest.fn();
@@ -16,7 +17,7 @@ const getLogSpy = () => {
   return logSpy;
 };
 
-describe('Screen Test', () => {
+describe('App Test', () => {
   test('커스텀 구분자를 사용한다.', async () => {
     const inputs = ['//;\\n1'];
     mockQuestions(inputs);
@@ -107,7 +108,9 @@ describe('Screen Test', () => {
       expect(logSpy).toHaveBeenCalledWith(expect.stringContaining(output));
     });
   });
+});
 
+describe('Screen Test', () => {
   test('소수점 계산시 반올림 되었다는 표시가 나온다.', async () => {
     const inputs = ['0.1,0.2'];
     mockQuestions(inputs);
@@ -125,6 +128,21 @@ describe('Screen Test', () => {
 });
 
 describe('Calculator Test', () => {
+  test('빈 값이 들어오면 0이 출력된다.', async () => {
+    const inputs = [''];
+    mockQuestions(inputs);
+
+    const logSpy = getLogSpy();
+    const outputs = ['결과 : 0'];
+
+    const app = new App();
+    await app.run();
+
+    outputs.forEach((output) => {
+      expect(logSpy).toHaveBeenCalledWith(expect.stringContaining(output));
+    });
+  });
+
   test('음수가 들어오면 계산에 실패한다.', async () => {
     const inputs = ['-1,2,3'];
     mockQuestions(inputs);
