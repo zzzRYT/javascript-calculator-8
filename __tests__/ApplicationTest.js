@@ -33,7 +33,7 @@ describe('Screen Test', () => {
   });
 
   test('// 와 \\n 사이 문자열이 들어오지 못한다.', async () => {
-    const inputs = ['//;#+\n1;#+2;#+3'];
+    const inputs = ['//;#+\\n1;#+2;#+3'];
     mockQuestions(inputs);
 
     const app = new App();

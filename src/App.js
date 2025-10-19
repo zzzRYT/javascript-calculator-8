@@ -4,6 +4,7 @@ import { Screen } from './views/Screen.js';
 import { selectedErrorResponse } from './utils.js';
 
 import { CUSTOM_CONTAINER } from './constants.js';
+import { Console } from '@woowacourse/mission-utils';
 class App {
   constructor() {
     this.separator = [',', ':'];
@@ -19,6 +20,10 @@ class App {
     if (this.#isCustomSeparator()) {
       this.#addCustomSeparator();
     }
+    if (this.#isNoneCustomSeparator()) {
+      throw new Error(selectedErrorResponse('input'));
+    }
+
     const defaultSeparatorString = this.separator.join('|');
     const regex = new RegExp(`[${defaultSeparatorString}]`, 'g');
     return this.#splitInputString(regex);
@@ -27,8 +32,14 @@ class App {
   #isCustomSeparator() {
     return (
       this.input.indexOf(CUSTOM_CONTAINER.START) !== -1 &&
-      this.input.indexOf(CUSTOM_CONTAINER.END)
+      this.input.indexOf(CUSTOM_CONTAINER.END) !== -1
     );
+  }
+
+  #isNoneCustomSeparator() {
+    const allowedSeparators = this.separator.join('');
+    const pattern = new RegExp(`[^0-9${allowedSeparators}]`);
+    return pattern.test(this.input);
   }
 
   #addCustomSeparator() {
@@ -37,6 +48,7 @@ class App {
       CUSTOM_CONTAINER.START.length;
     const endIndex = this.input.indexOf(CUSTOM_CONTAINER.END);
     const separator = this.input.substring(startIndex, endIndex);
+    Console.print(separator);
     if (this.#isString(separator)) {
       throw new Error(selectedErrorResponse('input'));
     }
